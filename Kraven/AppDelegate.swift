@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  WindowlessScreenShotApp
+//  Kraven
 //
 //  Created by Dan Ofer on 2025-12-26.
 //
@@ -17,62 +17,48 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     if let statusBarButton = statusBarItem?.button {
       statusBarButton.image = NSImage(
-        systemSymbolName: "cursorarrow.rays", accessibilityDescription: "Take a screenshot")
+        systemSymbolName: "safari", accessibilityDescription: "Control Safari Tabs")
     }
 
     let mainMenu = NSMenu()
 
-    // Create menu item: Capture an Area
-    let itemSelectArea = NSMenuItem(
-      title: "Move Tab to the Left",
+    // Create menu item: Move Tab to the Left
+    let moveTabToTheLeft = NSMenuItem(
+      title: "Move Tab to the Left (⇧⌃H)",
       action: #selector(moveTabToTheLeft),
       keyEquivalent: "")
 
-    itemSelectArea.image = NSImage(
-      systemSymbolName: "rectangle.dashed",
-      accessibilityDescription: "Select an Area"
+    moveTabToTheLeft.image = NSImage(
+      systemSymbolName: "arrow.forward",
+      accessibilityDescription: "Move Tab to the Left"
     )
 
-    itemSelectArea.target = self
-    mainMenu.addItem(itemSelectArea)
+    moveTabToTheLeft.target = self
+    mainMenu.addItem(moveTabToTheLeft)
 
-    // Creating menu item: Capture the Entire Screen
-    let itemCaptureEntireScreen = NSMenuItem(
-      title: "Capture the Entire Screen",
-      action: #selector(captureEntireScreen),
-      keyEquivalent: ""
-    )
-    itemCaptureEntireScreen.image = NSImage(
-      systemSymbolName: "macwindow.on.rectangle",
-      accessibilityDescription: "Capture the Entire Screen"
-    )
-
-    itemCaptureEntireScreen.target = self
-    mainMenu.addItem(itemCaptureEntireScreen)
-
-    // Creating menu item: Capture a Window
-    let itemCaptureWindow = NSMenuItem(
-      title: "Move Tab to the Right",
+    // Creating menu item: Move Tab to the Right
+    let moveTabToTheRight = NSMenuItem(
+      title: "Move Tab to the Right (⇧⌃L)",
       action: #selector(moveTabToTheRight),
       keyEquivalent: ""
     )
-    itemCaptureWindow.image = NSImage(
-      systemSymbolName: "macwindow",
-      accessibilityDescription: "Capture a Window"
+    moveTabToTheRight.image = NSImage(
+      systemSymbolName: "arrow.backward",
+      accessibilityDescription: "Move Tab to the Right"
     )
 
-    itemCaptureWindow.target = self
-    mainMenu.addItem(itemCaptureWindow)
+    moveTabToTheRight.target = self
+    mainMenu.addItem(moveTabToTheRight)
 
-    // Creating menu item: Pin/Unpin Tab
+    // Creating menu item: Pin / Unpin Tab
     let itemPinTab = NSMenuItem(
-      title: "Pin/Unpin Current Tab",
+      title: "Pin / Unpin Current Tab (⇧⌃P)",
       action: #selector(togglePinTab),
       keyEquivalent: ""
     )
     itemPinTab.image = NSImage(
       systemSymbolName: "pin",
-      accessibilityDescription: "Pin/Unpin Tab"
+      accessibilityDescription: "Pin / Unpin Tab"
     )
     itemPinTab.target = self
     mainMenu.addItem(itemPinTab)
@@ -99,21 +85,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func setupKeyboardMonitoring() {
     // Monitor for global keyboard events
     self.eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [self] event in
-      print("key is \(event.keyCode)")
       if event.modifierFlags.contains([.option, .shift]) && event.keyCode == 35 {
-        runAutomatorWorkflow(
-          at: #"Pin Tab"#)
+        runAutomatorWorkflow(at: #"Pin Tab"#)
       }
 
       if event.modifierFlags.contains([.option, .shift]) && event.keyCode == 4 {
-        runAutomatorWorkflow(
-          at: #"Move Safari Tab to the Left"#)
+        runAutomatorWorkflow(at: #"Move Safari Tab to the Left"#)
       }
 
       // Check for Cmd+Shift+Right Arrow (Move tab right)
       if event.modifierFlags.contains([.option, .shift]) && event.keyCode == 37 {
-        runAutomatorWorkflow(
-          at: #"Move Safari Tab to the Right"#)
+        runAutomatorWorkflow(at: #"Move Safari Tab to the Right"#)
       }
     }
   }
@@ -167,13 +149,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       at: #"Move Safari Tab to the Right"#)
   }
 
-  @objc private func captureEntireScreen(_sender: Any?) {
-    ScreenCaptureUtil.screenshot(type: .Screen)
-  }
-
   @objc private func togglePinTab(_sender: Any?) {
-    runAutomatorWorkflow(
-      at: #"Pin Tab"#)
+    runAutomatorWorkflow(at: #"Pin Tab"#)
   }
 
   @objc private func actionQuitApp(_sender: Any?) {

@@ -23,8 +23,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // Create menu item: Capture an Area
     let itemSelectArea = NSMenuItem(
-      title: "Select an Area",
-      action: #selector(actionSelectArea),
+      title: "Move Tab to the Left",
+      action: #selector(moveTabToTheLeft),
       keyEquivalent: "")
 
     itemSelectArea.image = NSImage(
@@ -51,8 +51,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // Creating menu item: Capture a Window
     let itemCaptureWindow = NSMenuItem(
-      title: "Capture a Window",
-      action: #selector(actionCaptureWindow),
+      title: "Move Tab to the Right",
+      action: #selector(moveTabToTheRight),
       keyEquivalent: ""
     )
     itemCaptureWindow.image = NSImage(
@@ -98,13 +98,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     task.waitUntilExit()
   }
 
-  @objc private func actionSelectArea(_sender: Any?) {
+  @objc private func moveTabToTheLeft(_sender: Any?) {
     runAutomatorWorkflow(
       at: #"/Users/ofer987/Library/Services/Move Safari Tab to the Left.workflow"#)
   }
 
-  @objc private func actionCaptureWindow(_sender: Any?) {
-    ScreenCaptureUtil.screenshot(type: .EntireWindow)
+  @objc private func moveTabToTheRight(_sender: Any?) {
+    runAutomatorWorkflow(
+      at: #"/Users/ofer987/Library/Services/Move Safari Tab to the Right.workflow"#)
   }
 
   @objc private func captureEntireScreen(_sender: Any?) {

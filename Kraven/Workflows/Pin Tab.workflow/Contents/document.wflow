@@ -51,7 +51,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>tell application "Safari"	activateend telltell application "System Events"	tell process "Safari"		-- Check if "Pin Tab" exists, otherwise try "Unpin Tab"		if exists menu item "Pin Tab" of menu "Window" of menu bar 1 then			click menu item "Pin Tab" of menu "Window" of menu bar 1		else if exists menu item "Unpin Tab" of menu "Window" of menu bar 1 then			click menu item "Unpin Tab" of menu "Window" of menu bar 1		end if	end tellend tell</string>
+					<string>tell application "System Events"	tell process "Safari"		-- Check if "Pin Tab" exists, otherwise try "Unpin Tab"		if exists menu item "Pin Tab" of menu "Window" of menu bar 1 then			click menu item "Pin Tab" of menu "Window" of menu bar 1		else if exists menu item "Unpin Tab" of menu "Window" of menu bar 1 then			click menu item "Unpin Tab" of menu "Window" of menu bar 1		end if	end tellend tell</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -102,12 +102,10 @@ end run</string>
 						<string>0</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>
-				<string>309.000000:551.000000</string>
+				<string>499.500000:587.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>

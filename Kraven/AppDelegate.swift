@@ -88,25 +88,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     setupKeyboardMonitoring()
   }
 
-  func setupKeyboardMonitoring() {
+  private func setupKeyboardMonitoring() {
     // Monitor for global keyboard events
     self.eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [self] event in
+      if !isSafariTheFrontmostApplication() {
+        return
+      }
+
+      // ⇧⌃P
       if event.modifierFlags.contains([.option, .shift]) && event.keyCode == 35 {
         runAutomatorWorkflow(at: #"Pin Tab"#)
       }
 
+      // ⇧⌃H
       if event.modifierFlags.contains([.option, .shift]) && event.keyCode == 4 {
         runAutomatorWorkflow(at: #"Move Safari Tab to the Left"#)
       }
 
-      // Check for Cmd+Shift+Right Arrow (Move tab right)
+      // ⇧⌃L
       if event.modifierFlags.contains([.option, .shift]) && event.keyCode == 37 {
         runAutomatorWorkflow(at: #"Move Safari Tab to the Right"#)
       }
     }
   }
 
-  func runAutomatorWorkflow(at path: String, withInput input: Any? = nil) {
+  private func isSafariTheFrontmostApplication() -> Bool {
+    let frontmostApplication = NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? ""
+
+    return frontmostApplication == "com.apple.Safari"
+  }
+
+  private func runAutomatorWorkflow(at path: String, withInput input: Any? = nil) {
     guard let url = Bundle.main.url(forResource: path, withExtension: "workflow") else {
       print("Failed to find '\(path).workflow'")
       return
@@ -128,7 +140,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     task.waitUntilExit()
   }
 
-  func executeAppleScript(_ script: String) -> Bool {
+  private func executeAppleScript(_ script: String) -> Bool {
     guard let appleScript = NSAppleScript(source: script) else {
       print("Failed to create AppleScript")
       return false
@@ -146,16 +158,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   @objc private func moveTabToTheLeft(_sender: Any?) {
+    if !isSafariTheFrontmostApplication() {
+      return
+    }
+
     runAutomatorWorkflow(
       at: #"Move Safari Tab to the Left"#)
   }
 
   @objc private func moveTabToTheRight(_sender: Any?) {
+    if !isSafariTheFrontmostApplication() {
+      return
+    }
+
     runAutomatorWorkflow(
       at: #"Move Safari Tab to the Right"#)
   }
 
   @objc private func togglePinTab(_sender: Any?) {
+    if !isSafariTheFrontmostApplication() {
+      return
+    }
+
     runAutomatorWorkflow(at: #"Pin Tab"#)
   }
 

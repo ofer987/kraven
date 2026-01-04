@@ -24,9 +24,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // Create menu item: Move Tab to the Left
     let moveTabToTheLeft = NSMenuItem(
-      title: "Move Tab to the Left (⇧⌃H)",
+      title: "Move Tab to the Left",
       action: #selector(moveTabToTheLeft),
-      keyEquivalent: "")
+      keyEquivalent: "H"
+    )
+    moveTabToTheLeft.keyEquivalentModifierMask = [.control, .shift]
 
     moveTabToTheLeft.image = NSImage(
       systemSymbolName: "arrow.forward",
@@ -38,10 +40,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // Creating menu item: Move Tab to the Right
     let moveTabToTheRight = NSMenuItem(
-      title: "Move Tab to the Right (⇧⌃L)",
+      title: "Move Tab to the Right",
       action: #selector(moveTabToTheRight),
-      keyEquivalent: ""
+      keyEquivalent: "L"
     )
+    moveTabToTheRight.keyEquivalentModifierMask = [.control, .shift]
+
     moveTabToTheRight.image = NSImage(
       systemSymbolName: "arrow.backward",
       accessibilityDescription: "Move Tab to the Right"
@@ -52,10 +56,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // Creating menu item: Pin / Unpin Tab
     let itemPinTab = NSMenuItem(
-      title: "Pin / Unpin Current Tab (⇧⌃P)",
+      title: "Pin / Unpin Current Tab",
       action: #selector(togglePinTab),
-      keyEquivalent: ""
+      keyEquivalent: "P"
     )
+    itemPinTab.keyEquivalentModifierMask = [.control, .shift]
+
     itemPinTab.image = NSImage(
       systemSymbolName: "pin",
       accessibilityDescription: "Pin / Unpin Tab"
